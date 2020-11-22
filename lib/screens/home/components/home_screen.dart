@@ -1,4 +1,6 @@
 import 'package:dictionary/constants.dart';
+import 'package:dictionary/screens/favorite/favorite.dart';
+import 'package:dictionary/screens/history/history.dart';
 import 'package:dictionary/screens/home/components/body.dart';
 import 'package:dictionary/screens/home/components/tabbar.dart';
 import 'package:flutter/material.dart';
@@ -26,16 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeBody(),
 
               // 2 Tab content
-              Container(
-                child: Text('Train'),
-                color: Colors.blue,
-              ),
+              HistoryWord(),
 
               // 3 Tab content
-              Container(
-                child: Text('Bike'),
-                color: Colors.green,
-              ),
+
+              FavoriteWord(),
+
+              
 
               Container(
                 child: Text('Bike'),
