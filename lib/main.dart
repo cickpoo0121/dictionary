@@ -1,16 +1,17 @@
 import 'package:dictionary/constants.dart';
+import 'package:dictionary/screens/init/initpage.dart';
 import 'package:dictionary/screens/home/components/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
     MaterialApp(
-      home: HomeScreen(),
-      // initialRoute: '/first',
-      // routes: {
-      //   '/first':(context)=>ListviewAss4(),
-      //   '/second':(context)=>ListviewAss41()
-      // },
+      // home: Init(),
+      initialRoute: '/Init',
+      routes: {
+        '/Init':(context)=>Init(),
+        '/Home':(context)=>HomeScreen()
+      },
       theme: ThemeData(
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: kBackgroundColor,

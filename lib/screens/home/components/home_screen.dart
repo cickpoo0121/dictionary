@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: SafeArea(
         child: Scaffold(
           // appBar: AppBar(
@@ -37,10 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.green,
               ),
 
-              Container(
-                child: Text('Bike'),
-                color: Colors.green,
-              ),
             ],
           ),
         ),

@@ -8,11 +8,13 @@ class HeadSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       child: Stack(
         children: [
           Container(
-            height: 200,
+            height: size.height/4.3,
+            // height: 200,
             decoration: BoxDecoration(
               color: kPrimaryColor,
               borderRadius: BorderRadius.only(
@@ -26,8 +28,8 @@ class HeadSearch extends StatelessWidget {
             top: -5,
             child: Image.asset(
               'assets/images/home.png',
-              height: 200,
-              width: 200,
+              height: size.height/4.3,
+              width: size.width/2.4,
             ),
           ),
           Positioned(

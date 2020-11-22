@@ -32,13 +32,6 @@ class _MyTabBarState extends State<MyTabBar> {
           ),
           Tab(
             icon: Icon(
-              Icons.timelapse_outlined,
-              color: kPrimaryColor,
-              size: 35,
-            ),
-          ),
-          Tab(
-            icon: Icon(
               Icons.favorite_outline,
               color: kPrimaryColor,
               size: 35,
