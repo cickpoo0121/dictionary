@@ -1,5 +1,6 @@
 import 'package:dictionary/constants.dart';
 import 'package:dictionary/screens/home/components/head_search.dart';
+import 'package:dictionary/screens/home/components/recent.dart';
 import 'package:flutter/material.dart';
 
 class HomeBody extends StatefulWidget {
@@ -77,45 +78,10 @@ class _HomeBodyState extends State<HomeBody> {
         SizedBox(
           height: 20,
         ),
-        Container(
-          height: 480,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: data.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                child: SizedBox(
-                  height: 70,
-                  child: Card(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          data[index]['title'],
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-              //  ListTile(
-              //   title: Text(data[index]['title']),
-              //   // subtitle: Text(data[index]['subtitle']),
-              //   // trailing: SizedBox(
-              //   //   child: Image.asset(data[index]['image']),
-              //   //   height: 50,
-              //   //   width: 50,
-              //   // ),
-              // );
-            },
-          ),
-        )
+        Recent(data: data)
       ],
     );
   }
 }
+
+
