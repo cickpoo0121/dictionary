@@ -24,18 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
           bottomNavigationBar: MyTabBar(),
           body: TabBarView(
             children: [
-              // 1 Tab content
+              // 1 Tab Home
               HomeBody(),
 
-              // 2 Tab content
-              HistoryWord(),
-
-              // 3 Tab content
-
+              // 2 Tab Favorite
               FavoriteWord(),
 
-              
-
+              // 3 Tab Game
+              FavoriteWord(),
             ],
           ),
         ),
