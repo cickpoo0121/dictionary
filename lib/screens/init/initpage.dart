@@ -1,3 +1,4 @@
+import 'package:dictionary/components/sqliteHelper.dart';
 import 'package:dictionary/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -9,19 +10,47 @@ class Init extends StatefulWidget {
 }
 
 class _InitState extends State<Init> {
-  String word = 'Apple';
-  String types = 'VT';
+  String eng = '';
+  String types = '';
+  String thai = '';
+  var data;
   FlutterTts flutterTts = FlutterTts();
+  SqliteHelper _sqlhelper = SqliteHelper();
 
   speak() async {
-    print(await flutterTts.getLanguages);
+    // print(await flutterTts.getLanguages);
     await flutterTts.setLanguage('en-US');
     await flutterTts.setPitch(1);
-    await flutterTts.speak(word);
+    await flutterTts.speak(eng);
   }
 
   copyWord() async {
-    await FlutterClipboard.copy(word);
+    await FlutterClipboard.copy(eng);
+  }
+
+  showWord() async {
+    data = await _sqlhelper.randomDB();
+    print(data[0]['ecat']);
+    print(data);
+
+    await setState(() {
+      eng = data[0]['esearch'];
+      thai = data[0]['tentry'];
+      types = data[0]['ecat'];
+    });
+  }
+
+  @override
+  initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+    (() async {
+      await _sqlhelper.openDB();
+      await showWord();
+    })();
+
   }
 
   @override
@@ -71,7 +100,7 @@ class _InitState extends State<Init> {
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(left: 50),
                         child: Text(
-                          word,
+                          eng,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -84,7 +113,7 @@ class _InitState extends State<Init> {
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(left: 50),
                         child: Text(
-                          'ผลไม้',
+                          thai,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -143,7 +172,7 @@ class _InitState extends State<Init> {
                                     children: [
                                       Text('√   Copied'),
                                       Spacer(),
-                                      Text('$word'),
+                                      Text('$eng'),
                                     ],
                                   ),
                                   duration: Duration(seconds: 1),
@@ -186,6 +215,7 @@ class _InitState extends State<Init> {
                               context,
                               '/Home',
                             );
+                            showWord();
                           },
                           color: Colors.white,
                           child: Text(

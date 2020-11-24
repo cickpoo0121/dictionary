@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
@@ -49,22 +50,43 @@ class SqliteHelper {
     print('DB closed');
   }
 
-  searchDB() async {
+  searchDB(word) async {
     // List list =
     //     await _db.rawQuery('SELECT * FROM eng2th WHERE esearch = ?2  AND ecat = ?1 ',['N','abandon']);
 
-    var list = await _db.query('eng2th',
-        columns: ['tentry,ethai'],
-        where: '"esearch" = ? AND "ecat" = ?',
-        whereArgs: ['abandon', 'N']);
+    //  await print(word);
+    var searchlist = await _db.query('eng2th',
+        columns: ['tentry,ecat,esearch'],
+        where: '"esearch" = ? ',
+        whereArgs: ['$word']);
 
-    if (list.length > 0) {
+    if (searchlist.length > 0) {
+      // print(searchlist);
+      // print(list[0]['tentry']);
+    } else {
+      print('Not found');
+    }
+
+    return searchlist;
+  }
+
+  randomDB() async {
+    var ranlist = await _db.query(
+      'eng2th',
+      columns: ['tentry,ecat,esearch'],
+      orderBy: 'Random()',
+      limit: 1,
+      // where: ' "ecat" = ?',
+      // whereArgs: ['N'],
+    );
+
+    if (ranlist.length > 0) {
       // print(list);
       // print(list[0]['tentry']);
     } else {
       print('Not found');
     }
 
-    return list;
+    return ranlist;
   }
 }

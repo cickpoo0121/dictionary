@@ -1,10 +1,37 @@
+import 'package:dictionary/components/sqliteHelper.dart';
 import 'package:dictionary/constants.dart';
 import 'package:flutter/material.dart';
 
-class HeadSearch extends StatelessWidget {
+class HeadSearch extends StatefulWidget {
   const HeadSearch({
     Key key,
   }) : super(key: key);
+
+  @override
+  _HeadSearchState createState() => _HeadSearchState();
+}
+
+class _HeadSearchState extends State<HeadSearch> {
+  TextEditingController searchWord = TextEditingController();
+
+  SqliteHelper sqliteHelper = SqliteHelper();
+  var data;
+  String word = '';
+
+  searchDB() async {
+    word = await searchWord.text;
+    data = await sqliteHelper.searchDB(word);
+    // print(data);
+    // await HomeBody(data: data);
+    // return data;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sqliteHelper.openDB();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +40,7 @@ class HeadSearch extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            height: size.height/4.3,
+            height: size.height / 4.3,
             // height: 200,
             decoration: BoxDecoration(
               color: kPrimaryColor,
@@ -28,8 +55,8 @@ class HeadSearch extends StatelessWidget {
             top: -5,
             child: Image.asset(
               'assets/images/home.png',
-              height: size.height/4.3,
-              width: size.width/2.4,
+              height: size.height / 4.3,
+              width: size.width / 2.4,
             ),
           ),
           Positioned(
@@ -66,6 +93,7 @@ class HeadSearch extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: searchWord,
                       decoration: InputDecoration(
                         hintText: 'Search',
                         hintStyle: TextStyle(
@@ -77,10 +105,13 @@ class HeadSearch extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.search,
-                    color: kPrimaryColor.withOpacity(0.5),
-                    size: 30,
+                  GestureDetector(
+                    child: Icon(
+                      Icons.search,
+                      color: kPrimaryColor.withOpacity(0.5),
+                      size: 30,
+                    ),
+                    onTap: () => searchDB(),
                   ),
                 ],
               ),

@@ -33,7 +33,7 @@ class _RecentState extends State<Recent> {
                       width: 10,
                     ),
                     Text(
-                      widget.data[index]['title'],
+                      widget.data[index]['esearch'],
                       textAlign: TextAlign.center,
                     ),
                   ],

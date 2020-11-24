@@ -1,5 +1,6 @@
 import 'package:dictionary/constants.dart';
 import 'package:dictionary/screens/favorite/favorite.dart';
+import 'package:dictionary/screens/game/game.dart';
 import 'package:dictionary/screens/history/history.dart';
 import 'package:dictionary/screens/home/components/body.dart';
 import 'package:dictionary/screens/home/components/tabbar.dart';
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FavoriteWord(),
 
               // 3 Tab Game
-              FavoriteWord(),
+              Game(),
             ],
           ),
         ),
