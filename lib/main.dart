@@ -17,7 +17,7 @@ void main() {
       },
       theme: ThemeData(
         primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: kBackgroundColor,
+        // scaffoldBackgroundColor: Colors.white,
         // accentColor: Colors.red[900],
         fontFamily: 'Lobster',
         textTheme: TextTheme(

@@ -50,7 +50,7 @@ class _FavoriteWordState extends State<FavoriteWord> {
           child: Text('FAVORITE'),
         ),
       ),
-      body: Container(
+      body: Container(margin: EdgeInsets.only(top: 20),
         height: 480,
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: ListView.builder(

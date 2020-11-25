@@ -107,7 +107,7 @@ class SqliteHelper {
     );
 
     if (ranlist.length > 0) {
-      // print(list);
+      print(ranlist);
       // print(list[0]['tentry']);
     } else {
       print('Not found');
@@ -115,4 +115,5 @@ class SqliteHelper {
 
     return ranlist;
   }
+
 }

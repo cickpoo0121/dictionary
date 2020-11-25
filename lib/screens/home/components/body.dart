@@ -38,11 +38,11 @@ class _HomeBodyState extends State<HomeBody> {
 
     await print(dataA);
 
-    // await Navigator.pushNamed(context, '/Meaning',
-    //     arguments: dataA[0]['esearch']);
-
-    Navigator.pushNamedAndRemoveUntil(context, '/Meaning', (route) => false,
+    await Navigator.pushNamed(context, '/Meaning',
         arguments: dataA[0]['esearch']);
+
+    // Navigator.pushNamedAndRemoveUntil(context, '/Meaning', (route) => false,
+    //     arguments: dataA[0]['esearch']);
 
     // print(data[0]['tentry']); // await HomeBody(data: data);
     // return data;

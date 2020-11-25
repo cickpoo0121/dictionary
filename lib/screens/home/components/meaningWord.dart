@@ -20,6 +20,7 @@ class _MeaningWordState extends State<MeaningWord> {
   String word = '';
   String data;
   bool isSaved = false;
+  final GlobalKey scaffoldKey = GlobalKey();
 
   var dataA = []; // arguments
   var newData = [];
@@ -40,24 +41,24 @@ class _MeaningWordState extends State<MeaningWord> {
 // copy wrod
   copyWord() async {
     await FlutterClipboard.copy(eng);
-    await Builder(
-      builder: (BuildContext context) {
-        return RaisedButton(
-          child: Text('Show'),
-          onPressed: () {
-            SnackBar snack = SnackBar(
-                content: Row(
-              children: [
-                Text('√   Copied'),
-                Spacer(),
-                Text(eng),
-              ],
-            ));
-            Scaffold.of(context).showSnackBar(snack);
-          },
-        );
-      },
-    );
+    // await Builder(
+    //   builder: (BuildContext context) {
+    //     return RaisedButton(
+    //       child: Text('Show'),
+    //       onPressed: () {
+    //         SnackBar snack = SnackBar(
+    //             content: Row(
+    //           children: [
+    //             Text('√   Copied'),
+    //             Spacer(),
+    //             Text(eng),
+    //           ],
+    //         ));
+    //         Scaffold.of(context).showSnackBar(snack);
+    //       },
+    //     );
+    //   },
+    // );
   }
 
 // query word from DB thath recive data from home page
@@ -190,21 +191,10 @@ class _MeaningWordState extends State<MeaningWord> {
   }
 
   backpage() {
-    Navigator.pushNamedAndRemoveUntil(context, '/Home', (route) => false);
+    // Navigator.pushNamedAndRemoveUntil(context, '/Home', (route) => false);
+    // Navigator.popAndPushNamed(context, '/Home');
+    Navigator.pop(context);
   }
-
-  // addFavoriteWords() {
-  //   isSaved = favorData.contains(eng);
-  //   if (isSaved == true) {
-  //     isSaved = false;
-  //     favorData.remove(eng);
-  //     saveFavorWord(favorData);
-  //   } else {
-  //     isSaved = true;
-  //     favorData.add(eng);
-  //     saveFavorWord(favorData);
-  //   }
-  // }
 
   @override
   void initState() {
@@ -223,6 +213,7 @@ class _MeaningWordState extends State<MeaningWord> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         body: Column(
           children: [
             Padding(
@@ -336,6 +327,20 @@ class _MeaningWordState extends State<MeaningWord> {
                               ),
                               onTap: () {
                                 copyWord();
+                                final state =
+                                    scaffoldKey.currentState as ScaffoldState;
+                                state.showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      children: [
+                                        Text('√   Copied'),
+                                        Spacer(),
+                                        Text(eng),
+                                      ],
+                                    ),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
 
                                 // SnackBar snack = SnackBar(
                                 //   content: Row(
@@ -392,73 +397,89 @@ class _MeaningWordState extends State<MeaningWord> {
                     height: 10,
                   ),
                   Container(
-                    height: 480,
+                    height: size.height / 1.5,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: dataA.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
-                        return SizedBox(
-                          height: 100,
-                          child: Card(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        dataA[index]['tentry'],
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Spacer(),
-                                      Container(
-                                        height: 30,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            color: kPrimaryColor,
-                                            borderRadius:
-                                                BorderRadius.horizontal(
-                                              left: Radius.circular(10),
-                                              right: Radius.circular(10),
-                                            )),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 5),
-                                          child: Text(
-                                            dataA[index]['ecat'],
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Sysnonyms is ',
-                                        style: TextStyle(
+                        return Container(height: 110,
+                          margin: EdgeInsets.only(top: 5,bottom: 5,right: 10,left: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(25),
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: Offset(0, 0),
+                                  blurRadius: 5,
+                                  color: kPrimaryColor.withOpacity(0.5)),
+                            ],
+                          ),
+                          // color: kPrimaryColor[200],
+                          // color:Colors.pink,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      dataA[index]['tentry'],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          // fontSize: 20,
+                                          fontSize: 20,
+                                          color: kPrimaryColor),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                      height: 30,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          color: kPrimaryColor,
+                                          borderRadius:
+                                              BorderRadius.horizontal(
+                                            left: Radius.circular(10),
+                                            right: Radius.circular(10),
+                                          )),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          dataA[index]['ecat'],
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(dataA[index]['NewEsyn']),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Sysnonyms is ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: kPrimaryColor
+                                          // fontSize: 20,
+                                          ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      dataA[index]['NewEsyn'],
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         );
