@@ -73,7 +73,7 @@ class _HistoryWordState extends State<HistoryWord> {
             SizedBox(
           height: 10,
         ),
-            Recent(data: data)
+            // Recent(data: data)
           ],
         ));
   }

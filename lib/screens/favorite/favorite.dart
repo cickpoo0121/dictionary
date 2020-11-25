@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dictionary/screens/home/components/recent.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteWord extends StatefulWidget {
   @override
@@ -7,72 +8,95 @@ class FavoriteWord extends StatefulWidget {
 }
 
 class _FavoriteWordState extends State<FavoriteWord> {
+  List<String> favorData = []; // keep favor word in local
+
+  void loadFavorWord() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    List<String> dataofFavorWord = pref.getStringList('fdata');
+    if (dataofFavorWord != null) {
+      setState(() {
+        favorData = dataofFavorWord;
+        // isSaved = dataofFavorWord.contains(eng);
+        // if (isSaved == true) {
+        //   isSaved = true;
+        // } else {
+        //   isSaved = false;
+        // }
+
+        print(favorData);
+      });
+    } else {
+      setState(() {
+        // data = passdata;
+        print('data Null');
+        // print(data.length);
+      });
+    }
+  }
+
   @override
- List<Map<String, dynamic>> data = [
-    {
-      'title': 'Apple1',
-      'subtitle': '9 baht',
-      'image': 'assets/images/apple.jpg'
-    },
-    {
-      'title': 'Banana1',
-      'subtitle': '3 baht',
-      'image': 'assets/images/banana.png'
-    },
-    {
-      'title': 'Orange1',
-      'subtitle': '5 baht',
-      'image': 'assets/images/orange.png'
-    },
-    {
-      'title': 'Kiwi1',
-      'subtitle': '14 baht',
-      'image': 'assets/images/kiwi.png'
-    },
-    {
-      'title': 'Apple2',
-      'subtitle': '9 baht',
-      'image': 'assets/images/apple.jpg'
-    },
-    {
-      'title': 'Banana2',
-      'subtitle': '3 baht',
-      'image': 'assets/images/banana.png'
-    },
-    {
-      'title': 'Orange2',
-      'subtitle': '5 baht',
-      'image': 'assets/images/orange.png'
-    },
-    {
-      'title': 'Kiwi2',
-      'subtitle': '14 baht',
-      'image': 'assets/images/kiwi.png'
-    },
-    {
-      'title': 'Orange2',
-      'subtitle': '5 baht',
-      'image': 'assets/images/orange.png'
-    },
-    {
-      'title': 'Kiwi2',
-      'subtitle': '14 baht',
-      'image': 'assets/images/kiwi.png'
-    },
-  ];
+  void initState() {
+    super.initState();
+    (() async {
+      await loadFavorWord();
+    })();
+  }
 
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Align(
-            child: Text('FAVORITE'),
-          ),
+      appBar: AppBar(
+        title: Align(
+          child: Text('FAVORITE'),
         ),
-        body: Column(
-          children: [
-            Recent(data: data)
-          ],
-        ));
+      ),
+      body: Container(
+        height: 480,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: favorData.length,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              child: SizedBox(
+                height: 70,
+                child: Card(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        // '',
+                        favorData[index],
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              onTap: () {
+                print(favorData);
+                Navigator.pushNamed(
+                  context,
+                  '/Meaning',
+                  arguments: favorData[index],
+                );
+              },
+            );
+            //  ListTile(
+            //   title: Text(data[index]['title']),
+            //   // subtitle: Text(data[index]['subtitle']),
+            //   // trailing: SizedBox(
+            //   //   child: Image.asset(data[index]['image']),
+            //   //   height: 50,
+            //   //   width: 50,
+            //   // ),
+            // );
+          },
+        ),
+      ),
+    );
   }
-} 
+}

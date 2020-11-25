@@ -9,8 +9,10 @@ class MyTabBar extends StatefulWidget {
 class _MyTabBarState extends State<MyTabBar> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      height: 80,
+      height: size.height/12,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -27,21 +29,23 @@ class _MyTabBarState extends State<MyTabBar> {
             icon: Icon(
               Icons.home_outlined,
               color: kPrimaryColor,
-              size: 35,
+              size: size.width/10,
             ),
           ),
           Tab(
             icon: Icon(
               Icons.favorite_outline,
               color: kPrimaryColor,
-              size: 35,
+              size: size.width/10,
+              
             ),
           ),
           Tab(
             icon: Icon(
               Icons.videogame_asset_outlined,
               color: kPrimaryColor,
-              size: 35,
+              size: size.width/10,
+              
             ),
           ),
         ],

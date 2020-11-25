@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:dictionary/components/sqliteHelper.dart';
 import 'package:dictionary/constants.dart';
 import 'package:dictionary/screens/home/components/head_search.dart';
 import 'package:dictionary/screens/home/components/recent.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeBody extends StatefulWidget {
   @override
@@ -13,28 +16,96 @@ class _HomeBodyState extends State<HomeBody> {
   TextEditingController searchWord = TextEditingController();
 
   SqliteHelper sqliteHelper = SqliteHelper();
-  List<Map<String, dynamic>> data = [];
+
+  List<String> data = [];
+  // List<Map<String, dynamic>> data=[];
   List<Map<String, dynamic>> dataA = [];
+  List<String> stroeData = [];
+
+  List<String> passdata = ['No Data'];
 
   String word = '';
 
   searchDB() async {
     word = await searchWord.text;
     dataA = await sqliteHelper.searchDB(word);
+    await save();
+    await load();
 
-    setState(() {
-      data = dataA;
-    });
-    print(data);
-    print(data[0]['tentry']); // await HomeBody(data: data);
+    // await setState(() {
+    //   data = dataA;
+    // });
+
+    await print(dataA);
+
+    // await Navigator.pushNamed(context, '/Meaning',
+    //     arguments: dataA[0]['esearch']);
+
+    Navigator.pushNamedAndRemoveUntil(context, '/Meaning', (route) => false,
+        arguments: dataA[0]['esearch']);
+
+    // print(data[0]['tentry']); // await HomeBody(data: data);
     // return data;
+  }
+
+  void save() async {
+    // get textfields data
+    String saveWrod = searchWord.text;
+    if (saveWrod != '') {
+      SharedPreferences prefload = await SharedPreferences.getInstance();
+      List<String> dataofStore = prefload.getStringList('kdata');
+      if (dataofStore != null) {
+        stroeData = dataofStore;
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        if (stroeData.length == 20) {
+          stroeData.removeAt(19);
+        }
+        stroeData.insert(0, saveWrod);
+        pref.setStringList('kdata', stroeData);
+      }
+      if (dataofStore == null) {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        if (stroeData.length == 20) {
+          stroeData.removeAt(19);
+        }
+        stroeData.insert(0, saveWrod);
+        pref.setStringList('kdata', stroeData);
+      }
+    } else {}
+  }
+
+  void load() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    List<String> dataofStore = pref.getStringList('kdata');
+
+    if (dataofStore != null) {
+      setState(() {
+        data = dataofStore;
+        print(data);
+      });
+    } else {
+      setState(() {
+        data = passdata;
+        print('data Null');
+        // print(data.length);
+      });
+    }
+  }
+
+  void clear() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.clear();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    sqliteHelper.openDB();
+
+    (() async {
+      await sqliteHelper.openDB();
+      await load();
+      // await clear();
+    })();
   }
 
   @override
@@ -58,7 +129,7 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
               ),
               Positioned(
-                left: 270,
+                left: size.width / 1.7,
                 top: -5,
                 child: Image.asset(
                   'assets/images/home.png',
@@ -68,7 +139,7 @@ class _HomeBodyState extends State<HomeBody> {
               ),
               Positioned(
                   left: 35,
-                  bottom: 110,
+                  bottom: size.height / 8,
                   child: Text(
                     'Nice Dictionary',
                     style: TextStyle(
@@ -78,13 +149,14 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   )),
               Positioned(
-                top: 100,
+                top: size.height / 9,
                 right: 0,
                 left: 20,
                 child: Container(
                   margin: EdgeInsets.only(right: kDefaultPadding + 80),
                   padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  height: 54,
+                  height: size.height / 15,
+                  // width: size.width/1,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),

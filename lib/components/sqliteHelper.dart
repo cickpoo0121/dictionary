@@ -57,6 +57,7 @@ class SqliteHelper {
     //  await print(word);
     var searchlist = await _db.query('eng2th',
         columns: ['tentry,ecat,esearch'],
+        limit: 1,
         where: '"esearch" = ? ',
         whereArgs: ['$word']);
 
@@ -68,6 +69,31 @@ class SqliteHelper {
     }
 
     return searchlist;
+  }
+
+  showWord(word) async {
+    // List list =
+    //     await _db.rawQuery('SELECT * FROM eng2th WHERE esearch = ?2  AND ecat = ?1 ',['N','abandon']);
+
+    List showAllword =
+        await _db.rawQuery('SELECT *, CASE WHEN esyn ISNULL then "Not Found" WHEN esyn NOTNULL then esyn END AS NewEsyn FROM eng2th WHERE esearch = ?',['$word']);
+    
+    
+
+    //  await print(word);
+    // var showAllword = await _db.query('eng2th',
+    //     columns: ['tentry,ecat,esearch,ethai,esyn'],
+    //     where: '"esearch" = ? ',
+    //     whereArgs: ['$word']);
+
+    if (showAllword.length > 0) {
+      // print(searchlist);
+      // print(list[0]['tentry']);
+    } else {
+      print('Not found');
+    }
+
+    return showAllword;
   }
 
   randomDB() async {

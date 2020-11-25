@@ -1,7 +1,9 @@
 import 'package:dictionary/constants.dart';
+import 'package:dictionary/screens/home/components/meaningWord.dart';
 import 'package:dictionary/screens/init/initpage.dart';
 import 'package:dictionary/screens/home/components/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 void main() {
   runApp(
@@ -10,7 +12,8 @@ void main() {
       initialRoute: '/Home',
       routes: {
         '/Init':(context)=>Init(),
-        '/Home':(context)=>HomeScreen()
+        '/Home':(context)=>HomeScreen(),
+        '/Meaning':(context)=>MeaningWord()
       },
       theme: ThemeData(
         primaryColor: kPrimaryColor,
