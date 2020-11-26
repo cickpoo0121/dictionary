@@ -9,7 +9,7 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Home',
+      initialRoute: '/Init',
       routes: {
         '/Init':(context)=>Init(),
         '/Home':(context)=>HomeScreen(),

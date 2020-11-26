@@ -65,7 +65,7 @@ class _MeaningWordState extends State<MeaningWord> {
   getWrod(word) async {
     dataA = await sqliteHelper.showWord(word);
     print(dataA);
-    print(dataA[0]['tentry']);
+    print(dataA[0]['NewEsyn']);
 
     await setState(() {
       eng = dataA[0]['esearch'];
@@ -78,13 +78,14 @@ class _MeaningWordState extends State<MeaningWord> {
     newData = await sqliteHelper.showWord(word);
     await save();
 
-    print(newData);
+    // print(newData);
     // print(newData);
 
     await setState(() {
       eng = newData[0]['esearch'];
       dataA = newData;
       print(dataA);
+      // print(dataA[0]['NewEsyn']);
     });
   }
 
@@ -179,7 +180,7 @@ class _MeaningWordState extends State<MeaningWord> {
           isSaved = false;
         }
 
-        print(favorData);
+        // print(favorData);
       });
     } else {
       setState(() {
@@ -404,8 +405,10 @@ class _MeaningWordState extends State<MeaningWord> {
                       itemCount: dataA.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
-                        return Container(height: 110,
-                          margin: EdgeInsets.only(top: 5,bottom: 5,right: 10,left: 10),
+                        return Container(
+                          height: 110,
+                          margin: EdgeInsets.only(
+                              top: 5, bottom: 5, right: 10, left: 10),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(25),
@@ -419,8 +422,7 @@ class _MeaningWordState extends State<MeaningWord> {
                           // color: kPrimaryColor[200],
                           // color:Colors.pink,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -440,14 +442,12 @@ class _MeaningWordState extends State<MeaningWord> {
                                       width: 50,
                                       decoration: BoxDecoration(
                                           color: kPrimaryColor,
-                                          borderRadius:
-                                              BorderRadius.horizontal(
+                                          borderRadius: BorderRadius.horizontal(
                                             left: Radius.circular(10),
                                             right: Radius.circular(10),
                                           )),
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 5),
+                                        padding: const EdgeInsets.only(top: 5),
                                         child: Text(
                                           dataA[index]['ecat'],
                                           style: TextStyle(
